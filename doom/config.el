@@ -104,3 +104,22 @@
 
 (after! org-capture
   (set-popup-rule! "^CAPTURE" :actions '(display-buffer-same-window) :select t :quit nil))
+
+
+(after! elfeed-org
+  (setq rmh-elfeed-org-files '("~/brain/reference/rss.org"))
+  (elfeed-org))
+
+(after! elfeed
+  (setq elfeed-search-filter "@2-weeks-ago +unread"
+        elfeed-search-title-max-width 100
+        elfeed-search-title-min-width 30))
+
+(after! org
+  (add-to-list 'org-capture-templates
+               '("r" "Capture from elfeed" entry
+                 (file+headline "~/brain/reference/reading-inbox.org" "Inbox")
+                 "* TODO Read: %:elfeed-entry-title\n  Source: %:elfeed-entry-link\n  Tags: %:elfeed-entry-tags\n  Captured: %U\n"
+                 :empty-lines 1)))
+
+
